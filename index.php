@@ -342,6 +342,24 @@
         } 
         
         function getProfile(profile){
+            // Emptying out the match detail table
+            for(var i=0;i<10;i++){
+                $("#Player"+i).html('');
+                $("#PlayerLevel"+i).html('');
+                $("#PlayerHero"+i).html('');
+                $("#PlayerKDA"+i).html('');
+                $("#PlayerGold"+i).html('');
+                $("#PlayerLastHits"+i).html('');
+                $("#PlayerDenies"+i).html('');
+                $("#PlayerGPM"+i).html('');
+                $("#PlayerXPM"+i).html('');
+                $("#PlayerItems"+i).html('');
+            }
+            
+             // Emptying out the recent matches
+            $("#ProfileTable tbody").empty();
+            
+            
             $("#ProfileTable").removeClass('hidden');
             $("#ProfileTable").fadeOut(); 
             if(profile == 1) // Means it's sent from the search button and not the URL.
