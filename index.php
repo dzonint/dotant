@@ -2,7 +2,7 @@
 
 <html>
 	<head>
-		<title>Dota 2 match analyzer by NV</title>
+		<title>DotaNT</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="initial-scale=1.0">
 
