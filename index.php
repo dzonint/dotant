@@ -60,12 +60,16 @@
                 <p style="text-align:left">No profile loaded - make sure you've entered the correct Steam ID or try again in few seconds.</p>
             </th>
             <th></th>
-			<th colspan="4" style="text-align:right;margin-right: 10px;">
-                <br>
-                <ul style="list-style: none;">
-                    <li id="ProfileWins" style="font-size:13.5pt;color:green;"></li>
-                    <li id="ProfileLosses" style="font-size:13.5pt;color:red;"></li>
-                    <li id="ProfileWinrate" style="font-size:10pt;font-weight:bold;"></li>
+			<th colspan="4">
+                <ul style="list-style: none;margin-top:21.2px;margin-left:1.5px;" class="pull-right">
+                    <li id="ProfileHero0" style="float:left;margin-right: 20px;"></li>
+                    <li id="ProfileWins" style="font-size:13.5pt;color:green; float:right;"></li>
+                            
+                    <li id="ProfileHero1" style="clear:both; float:left;margin-right: 20px;"></li>
+                    <li id="ProfileLosses" style="font-size:13.5pt;color:red;float:right;"></li>
+                            
+                    <li id="ProfileHero2" style="clear:both;float:left;margin-right: 20px;"></li>
+                    <li id="ProfileWinrate" style="font-size:10pt;font-weight:bold;float:right;"></li>
                 </ul>
             </th>
             <th id="SoloMMR"></th>
@@ -342,7 +346,7 @@
         } 
         
         function getProfile(profile){
-            // Emptying out the match detail table
+            // Emptying out the match detail table.
             for(var i=0;i<10;i++){
                 $("#Player"+i).html('');
                 $("#PlayerLevel"+i).html('');
@@ -356,9 +360,8 @@
                 $("#PlayerItems"+i).html('');
             }
             
-             // Emptying out the recent matches
+            // Emptying out the recent matches.
             $("#ProfileTable tbody").empty();
-            
             
             $("#ProfileTable").removeClass('hidden');
             $("#ProfileTable").fadeOut(); 
@@ -420,8 +423,31 @@
                                 $('#ProfileWinrate').html((response.win/(response.win+response.lose) * 100).toFixed(2) + '% Winrate');
                             }
                         });
+            
+                // AJAX for most played heroes. OpenDota sorts the results by the number of games played with hero, so we just take the first 3 results.
+                        $.ajax({
+                            url: 'https://api.opendota.com/api/players/'+profile+'/heroes',
+                            async: false,
+                            success: function(response){
+                                for(var num = 0; num < 3; num++){
+                                    // Finding appropriate hero image.
+                                    $.each(heroes, function(numa, heroes){
+                                        if(response[num].hero_id == heroes.id)
+                                            heroImage = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_eg.png" alt="' + heroes.localized_name + '" style="margin-right: 3px;">';
+                                    });
+                                    
+                                    // Populating the hero fields.
+                                    $("#ProfileHero"+num).html(
+                                        heroImage + 
+                                        '<span style="color:green;">' + response[num].win + 
+                                        '</span> - <span style="color:red;">' + (response[num].games - response[num].win) + 
+                                        '</span> : <span style="color:DodgerBlue;"> ' + ((response[num].win/response[num].games) * 100).toFixed(2) + '% </span>'
+                                    );                                
+                                }
+                            }
+                        });
                    
-                    // AJAX for recent matches.
+                // AJAX for recent matches.
                     $.ajax({
                         url: 'https://api.opendota.com/api/players/'+profile+'/recentMatches',
                         success: function(response){  
@@ -465,9 +491,6 @@
                                 +'</tr>'
                                 );
                             });
-                        },
-                        error: function(){
-                            alert('Unable to find recent matches.');
                         }
                     });
                     $("#ProfileTable").fadeIn();
