@@ -16,11 +16,9 @@
 <link rel="stylesheet" type="text/css" href="css/profileTable.css">
 <script src="script/jquery_3.2.1_min.js"></script>
 <script src="script/bootstrap_3.3.7_min.js"></script>
-<!-- To make it so that clicked links do not become grey. -->
-<style></style>
 	</head>
 
-	<body background="img/Background.png" style="background-size: cover; background-attachment: fixed; background-repeat: no-repeat;"> 
+<body background="img/Background.png" style="background-size: cover; background-attachment: fixed; background-repeat: no-repeat;"> 
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
@@ -75,7 +73,6 @@
             <th id="SoloMMR"></th>
             <th id="PartyMMR"></th>
             <th id="EstimatedMMR"></th>
-            
 		</tr>
 		<tr>
 			<th style="font-size:16pt;font-weight: bold; text-align: center;">Match ID</th>
