@@ -307,7 +307,7 @@
                                     naziv = heroes.name.substr(14);
                                     // Table.
                                     if(player.personaname != null){
-                                        $("#Player"+i).html('<a href="index.php?profile='+player.account_id+'">'+player.personaname+'</a>')
+                                        $("#Player"+i).html('<a href="?profile='+player.account_id+'">'+player.personaname+'</a>')
                                     }
                                     else 
                                         $("#Player"+i).html("Anonymous");
