@@ -392,6 +392,7 @@
                     
                     // If it passed the check, then it means that the profile was found and we can get the necessary information.
                     $("#ProfileAvatar").html('<img style=\"height: 96px;width: auto;\" src="' + response.profile.avatarmedium + '">');
+                    /*$("#ProfileName").html('<h1 style=\"font-size: 200%;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><br><a href="#" onclick="alert(123);"><small> Matches </small></a><a href="#" onclick="alert(322);"><small> Heroes</small></a>');*/
                     $("#ProfileName").html('<h1 style=\"font-size: 200%;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1>');
                     if(response.solo_competitive_rank != null){ // Sometimes people have solo but not party MMR.
                         $("#SoloMMR").html('<h1>Solo MMR<br><strong style=\"color:#a29ca9;\">'+response.solo_competitive_rank+'</strong></h1>');
@@ -451,8 +452,15 @@
                             $.each(response, function(i, match){ 
                                    // Finding out game mode. 
                                     $.each(game_modes, function(j, game_mode){
-                                        if(match.game_mode == game_mode.id)
-                                            gameMode = game_mode.name; 
+                                        if(match.game_mode == game_mode.id){
+                                            gameMode = game_mode.name;
+                             // Apparantelly, OpenDota API specifies both normal and ranked all pick games with id of 22.
+                             // Thus, we have to differentiate them by lobby_type. lobby_type 7 is ranked matchmaking.
+                                            if(match.lobby_type != 7){
+                                                var temp = 'A'+game_mode.name.toString().substring(8);
+                                                gameMode = temp;
+                                            }
+                                        }
                                     });
                                 
                                     // Finding out skill level.
