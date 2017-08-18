@@ -377,7 +377,7 @@
              // AJAX for profile information. 
             $.ajax({ 
                 url: 'https://api.opendota.com/api/players/'+profile,
-                async: false,
+                async: true,
                 success: function(response){
                     // Invalid profiles will provide this output: {"tracked_until":null,"solo_competitive_rank":null,"competitive_rank":null}
                     // Thus, we check if there are 3 elements inside the object.
@@ -392,7 +392,7 @@
                     
                     // If it passed the check, then it means that the profile was found and we can get the necessary information.
                     $("#ProfileAvatar").html('<img style=\"height: 96px;width: auto;\" src="' + response.profile.avatarmedium + '">');
-                    /*$("#ProfileName").html('<h1 style=\"font-size: 200%;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><br><a href="#" onclick="alert(123);"><small> Matches </small></a><a href="#" onclick="alert(322);"><small> Heroes</small></a>');*/
+                    /*$("#ProfileName").html('<h1 style=\"font-size: 200%;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><br><a href="#" onclick="alert(322);"><small> Matches </small></a><a href="#" onclick="alert(322);"><small> Heroes</small></a>');*/
                     $("#ProfileName").html('<h1 style=\"font-size: 200%;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1>');
                     if(response.solo_competitive_rank != null){ // Sometimes people have solo but not party MMR.
                         $("#SoloMMR").html('<h1>Solo MMR<br><strong style=\"color:#a29ca9;\">'+response.solo_competitive_rank+'</strong></h1>');
@@ -414,7 +414,7 @@
                  // AJAX for winrate.
                         $.ajax({
                             url: 'https://api.opendota.com/api/players/'+profile+'/wl',
-                            async: false,
+                            async: true,
                             success: function(response){
                                 $("#ProfileWins").html(response.win + ' Wins');
                                 $("#ProfileLosses").html(response.lose + ' Losses');
@@ -425,7 +425,7 @@
                 // AJAX for most played heroes. OpenDota sorts the results by the number of games played with hero, so we just take the first 3 results.
                         $.ajax({
                             url: 'https://api.opendota.com/api/players/'+profile+'/heroes',
-                            async: false,
+                            async: true,
                             success: function(response){
                                 for(var num = 0; num < 3; num++){
                                     // Finding appropriate hero image.
@@ -456,7 +456,7 @@
                                             gameMode = game_mode.name;
                              // Apparantelly, OpenDota API specifies both normal and ranked all pick games with id of 22.
                              // Thus, we have to differentiate them by lobby_type. lobby_type 7 is ranked matchmaking.
-                                            if(match.lobby_type != 7){
+                                            if(match.game_mode == 22 && match.lobby_type != 7){
                                                 var temp = 'A'+game_mode.name.toString().substring(8);
                                                 gameMode = temp;
                                             }
