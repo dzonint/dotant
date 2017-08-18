@@ -5,20 +5,22 @@
 		<title>DotaNT</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="initial-scale=1.0">
+        <meta name="author" content="TDD - dzonint@yahoo.com">
 
-<link href="http://www.dota2.com/public/css/global.css" rel="stylesheet" type="text/css" >
-<link href="http://www.dota2.com/public/css/global_english.css" rel="stylesheet" type="text/css" >
-<link href="http://www.dota2.com/public/css/publicheader.css" rel="stylesheet" type="text/css" >
-<link href="http://www.dota2.com/public/css/jquery.tournamentschedule.css" rel="stylesheet" type="text/css" >
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">    
-<link rel="stylesheet" type="text/css" href="profileTable.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- NOTE : dota2_publicheader => http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.svg gives 404 error. -->
+<link rel="stylesheet" type="text/css" href="css/bootstrap_3.3.7_min.css">
+<link rel="stylesheet" type="text/css" href="css/dota2_global.css">
+<link rel="stylesheet" type="text/css" href="css/dota2_global_english.css">
+<link rel="stylesheet" type="text/css" href="css/dota2_publicheader.css">
+<link rel="stylesheet" type="text/css" href="css/dota2_jquery.tournamentschedule.css">
+<link rel="stylesheet" type="text/css" href="css/profileTable.css">
+<script src="script/jquery_3.2.1_min.js"></script>
+<script src="script/bootstrap_3.3.7_min.js"></script>
 <!-- To make it so that clicked links do not become grey. -->
-<style>a:visited { color: #337ab7!important; }</style>
+<style></style>
 	</head>
 
-	<body background="Background.png" style="background-size: cover; background-attachment: fixed; background-repeat: no-repeat;"> 
+	<body background="img/Background.png" style="background-size: cover; background-attachment: fixed; background-repeat: no-repeat;"> 
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
         <div class="navbar-header">
@@ -35,14 +37,14 @@
             <li><a href="http://steamcommunity.com/profiles/76561198113652356/">Created by <strong>TDD</strong></a>.</li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="SearchProfilesText" onclick="toggleSearch();"><small>Search for profiles</small></a></li>
-                <li><a href="#" class="SearchMatchesText" onclick="toggleSearch();"><small>Search for matches</small></a></li>
+                <li><a href="#" class="SearchProfilesText" onclick="toggleSearch();"><small style="color:#959595">Search for profiles</small></a></li>
+                <li><a href="#" class="SearchMatchesText" onclick="toggleSearch();"><small style="color:#959595">Search for matches</small></a></li>
               
-                <li class="MatchSearch"><a><label>Enter a match ID:</label></a></li>
+                <li class="MatchSearch"><a><label style="color:#959595">Enter a match ID:</label></a></li>
                 <li class="MatchSearch"><a><input type="text" name="matchSearchID" id="matchSearchID"/></a></li>
                 <li class="MatchSearch"><a><input class="btn btn-success btn-sm" type="button" onclick="getMatch(1);" value="Search"></a></li>
                 
-                <li class="ProfileSearch"><a><label>Enter a profile ID:</label></a></li>
+                <li class="ProfileSearch"><a><label style="color:#959595">Enter a profile ID:</label></a></li>
                 <li class="ProfileSearch"><a><input type="text" name="profileSearchID" id="profileSearchID"/></a></li>
                 <li class="ProfileSearch"><a><input class="btn btn-success btn-sm" type="button" onclick="getProfile(1);" value="Search"></a></li>
           </ul>
@@ -305,15 +307,6 @@
                                     naziv = heroes.name.substr(14);
                                     // Table.
                                     if(player.personaname != null){
-                                        // AJAX for profile ID conversion.
-                                       /* $.ajax({
-                                            url: 'ProfileIDFunction.php',
-                                            data: 'id32='+player.account_id,
-                                            success: function(res) {
-                                                // $("#Player"+i).html('<a href="http://steamcommunity.com/profiles/'+res+'/">'+player.personaname+'</a>');
-                                                $("#Player"+i).html('<a href="index.php?profile='+res+'">'+player.personaname+'</a>')
-                                            }
-                                        });*/
                                         $("#Player"+i).html('<a href="index.php?profile='+player.account_id+'">'+player.personaname+'</a>')
                                     }
                                     else 
@@ -375,7 +368,7 @@
                         elementCount++;
                     });
                     if(elementCount == 3){
-                        alert('Profile not found.');
+                        alert('Profile not found (or the user does not play Dota).');
                         return;
                     }
                     
