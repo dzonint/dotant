@@ -31,13 +31,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="index.php">DotaNT</a>
+          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nCreated by TDD.');">DotaNT</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="http://steamcommunity.com/profiles/76561198113652356/">Created by <strong>TDD</strong></a>.</li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
+                <li><a href="index.php?recentmatches">Recent matches</a></li>
                 <li><a href="#" class="SearchProfilesText" onclick="toggleSearch();"><small style="color:#959595">Search for profiles</small></a></li>
                 <li><a href="#" class="SearchMatchesText" onclick="toggleSearch();"><small style="color:#959595">Search for matches</small></a></li>
               
@@ -53,27 +54,38 @@
       </div>
     </nav>
     
+        <!-- RECENT MATCHES TABLE -->
+    <table id="RecentMatchesTable" class="container">
+        <thead>
+            <tr style="background-color:#3c414c;">
+                <th style="text-align:center;">Match ID</th>
+                <th style="text-align:center;">Average MMR</th>
+                <th style="text-align:center;">Start time</th>
+                <th style="text-align:center;">Match duration</th>
+                <th style="text-align:center;">Game mode</th>
+                <th style="text-align:center;">Radiant team</th>
+                <th style="text-align:center;">Dire team</th>
+                <th style="text-align:center;">Outcome</th>
+            </tr> 
+        </thead>
+        <tbody id="RecentMatches"></tbody>
+    </table>
+    
         <!-- PROFILE DATA TABLE -->
 <table id="ProfileDataTable" class="container">
    <thead>
     <!-- Avatar : 5%, Name : 20%, TBD: 23%, Matches: 30%, MMR: 22%. -->
       <tr style="background-color: #353943;">
-         <th id="ProfileAvatar" style="width:5%;"></th>
-         <th id="ProfileName" style="width:20%;"></th>
-         <th style="width:23%;padding:0;">
+         <th id="ProfileAvatar" ></th>
+         <th id="ProfileName" style="width:12%;"></th>
+         <th style="width:29%;padding:0;">
             <ul style="list-style:none;">
                 <li id="NotableHeroes"> 
                     <!--<small style="float:left;padding-bottom:2px;">Notable heroes</small>-->
                 </li> 
-               <li id="Hero0" style="float:left;margin-right: 20px;"></li>
-               <li id="Prons" style="font-size:13.5pt;color:green; float:right;"></li>
-               <li id="Proero1" style="clear:both; float:left;margin-right: 20px;"></li>
-               <li id="ProLosses" style="font-size:13.5pt;color:red;float:right;"></li>
-               <li id="Profro2" style="clear:both;float:left;margin-right: 20px;"></li>
-               <li id="Proinrate" style="font-size:10pt;font-weight:bold;float:right;"></li>
             </ul>
           </th>
-         <th style="width:30%;">
+         <th style="width:33%;">
             <ul style="list-style: none;" class="pull-right"><!-- margin-top:21.2px;margin-left:1.5px; -->
                 <li> 
                     <small style="float:left;padding-bottom:2px;">Most played heroes</small>
@@ -87,7 +99,7 @@
                <li id="ProfileWinrate" style="font-size:10pt;font-weight:bold;float:right;"></li>
             </ul>
          </th>
-          <th style="padding:0;width:22%;">
+          <th style="padding:0;width:26%;">
             <ul style="list-style: none;">
                <li id="SoloMMR" style="display:inline-block;margin-right: 6px;"></li>
                <li id="PartyMMR" style="display:inline-block;margin-right: 6px;"></li>
@@ -134,10 +146,7 @@
         <tbody id="ProfileHeroes"></tbody>
     </table>
 
-        
-        
-        
-        <!-- MATCH TABLE -->
+        <!-- MATCH DETAILS TABLE -->
         <div id="popup_match_details" class="modal fade" role="dialog">
         <div id="MatchDetails" style="display: block;">
 <button type="button" class="close" data-dismiss="modal"><img id="close_details_button" src="http://cdn.dota2.com/apps/dota2/images/international2017/overview/close_details_button.png"></button>
@@ -286,6 +295,7 @@
                     $("#ProfileRecentMatchesTable").hide();
                     $("#ProfileHeroesTable").hide();
                     $("#ProfileDataTable").hide();
+                    $("#RecentMatchesTable").hide();
             
                     <?php if(isset($_REQUEST['profile'])){
                         // If we get 64bit ID in the URL, we will convert here instead of using AJAX in the getProfile function.
@@ -300,7 +310,75 @@
                     <?php if(isset($_REQUEST['match'])){ ?>
                         getMatch(<?= $_REQUEST['match'] ?>);
                     <?php } ?>
+            
+                    <?php if(isset($_REQUEST['recentmatches'])){ ?>
+                        getRecentMatches();
+                    <?php } ?>
             });
+        
+        function getRecentMatches(){
+            $("#RecentMatchesTable").fadeOut();
+            $("#RecentMatches").empty();
+             
+            $.ajax({
+                url: 'https://api.opendota.com/api/publicMatches',
+                success: function(response){
+                    $.each(response, function(i, match){
+                        
+                        $.each(game_modes, function(j, game_mode){
+                            if(match.game_mode == game_mode.id){
+                                gameMode = game_mode.name;
+                                if(match.game_mode == 22 && match.lobby_type != 7){
+                                    var temp = 'A'+game_mode.name.toString().substring(8);
+                                    gameMode = temp;
+                                }
+                            }
+                        }); 
+                        radiantTeam = direTeam = ""; 
+                        
+                        var radID = match.radiant_team.split(',');
+                        $.each(radID, function(k, hero_id){ 
+                           $.each(heroes, function(l, heroes){
+                             if(heroes.id == hero_id)
+                                 radiantTeam += '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
+                           });
+                        }); 
+                        
+                        var dirID = match.dire_team.split(',');
+                        $.each(dirID, function(m, hero_id){
+                           $.each(heroes, function(n, heroes){
+                             if(heroes.id == hero_id)
+                                 direTeam += '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
+                           });
+                        });
+                        
+                        if(match.radiant_win != false)
+                            outcome = '<strong style="color:green;">Radiant victory</strong>';
+                        else 
+                            outcome = '<strong style="color:red;">Dire victory</strong>';
+                        
+                        var MatchDate = new Date(match.start_time * 1000);
+                        var MatchDuration = Math.floor(match.duration / 60) + ':' + Math.floor(match.duration % 60);
+                        $("#RecentMatches").append(
+                            '<tr style="text-align:center;">'
+                            +'<td style="text-align: center;" class="sorttable_nosort"><a href="#" style=\"font-size: 12pt;\" onclick=getMatch('+match.match_id+');>' + match.match_id + '</a></td>'
+                            +'<td title="Based on '+match.num_mmr+' people showing their MMR">'+match.avg_mmr+'</td>'
+                            +'<td>'+MatchDate.toString().substring(4,24)+'</td>'
+                            +'<td>'+MatchDuration+'</td>'
+                            +'<td>'+gameMode+'</td>'
+                            +'<td class="sorttable_nosort">'+radiantTeam+'</td>'
+                            +'<td class="sorttable_nosort">'+direTeam+'</td>'
+                            +'<td>'+outcome+'</td>'
+                            +'</tr>'
+                        );
+                    });
+                }
+            });
+            /*var newTableObject = document.getElementById('RecentMatchesTable');
+            sorttable.makeSortable(newTableObject); */
+            $("#RecentMatchesTable").fadeIn();
+            
+        }
         
         function toggleSearch(){
             $('.MatchSearch').toggle();
