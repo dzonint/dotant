@@ -103,15 +103,15 @@
         <thead>
             <tr style="background-color: #383c47" id="ProfileRecentMatchesHeader"> 
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Match ID</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;">Date</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center; color:#d7cfe0;">Date</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Match duration</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Skill</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Game mode</th>
                 <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;width:16%;">Hero</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">K/D/A</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%;">GPM</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%;">XPM</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;width:12%;">Outcome</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">GPM</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">XPM</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;width:12%; color:#d7cfe0;">Outcome</th>
             </tr>
         </thead>
         <tbody id="ProfileMatches"></tbody>
@@ -121,14 +121,14 @@
     <table id="ProfileHeroesTable" class="container sortable">
         <thead>
              <tr style="background-color: #383c47" id="ProfileHeroesHeader">
-                <th colspan="3"style="font-size:18pt;font-weight: bold; text-align: center;">Hero</th>
+                <th colspan="3"style="font-size:18pt;font-weight: bold; text-align: center; color:#d7cfe0;">Hero</th>
                 <th colspan="2" style="font-size:14pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Last played</th>
-                <th style="font-size:14pt;font-weight: bold; text-align: center;">Matches played</th>
+                <th style="font-size:14pt;font-weight: bold; text-align: center; color:#d7cfe0;">Matches played</th>
                 <th style="font-size:14pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Wins/Losses</th>
-                <th style="font-size:14pt;font-weight: bold; text-align: center;">Winrate</th>
+                <th style="font-size:14pt;font-weight: bold; text-align: center; color:#d7cfe0;">Winrate</th>
                 <th style="font-size:14pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Times encountered</th>
-                <th style="font-size:14pt;font-weight: bold; text-align: center;">WR with</th>
-                <th style="font-size:14pt;font-weight: bold; text-align: center;">WR against</th>
+                <th style="font-size:14pt;font-weight: bold; text-align: center; color:#d7cfe0;">WR with</th>
+                <th style="font-size:14pt;font-weight: bold; text-align: center; color:#d7cfe0;">WR against</th>
             </tr>
         </thead>
         <tbody id="ProfileHeroes"></tbody>
