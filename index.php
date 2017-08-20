@@ -473,7 +473,7 @@
                                     else    
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.name.substring(5)+'">');
+                                    $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.localized_name+'">');
                                 }
                              
                                 // Backpack.
@@ -484,7 +484,7 @@
                                     else 
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.name.substring(5)+'">');
+                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.localized_name+'">');
                                 }
                             });    
                          
