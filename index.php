@@ -521,24 +521,39 @@
                                         +'<td style="text-align: center;">'+((heroDetail.against_win/heroDetail.against_games)*100).toFixed(2)+'%</td>'
                                         +'</tr>');
                                     
-                                        /* Checking if user has a great winrate with hero.
+                                        /* Checking if the user has a great winrate with hero.
+                                        /*  Normal image :
                                         /*  10 - 14 games played - 70% winrate (has to win 7 out of 9 / 10 out of 14 matches)
                                         /*  15 - 24 games played - 66.66% winrate (has to win 10 out of 15 / 16 out of 24 matches)
+                                        /*  Burning image :
                                         /*  25 - 39 games played - 63.33% winrate (has to win 16 out of 25 / 25 out of 39 matches)
-                                        /*  40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches)
-                                        /* */
+                                        /*  40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches) */
+                                        conditionFullfilled = 0;
                                         WR = ((heroDetail.win/heroDetail.games) * 100).toFixed(2);
-                                        if((heroDetail.games >= 10 && heroDetail.games < 15 && WR >= 70) || 
-                                           (heroDetail.games >= 15 && heroDetail.games < 25 && WR >= 66.65) || 
-                                           (heroDetail.games >= 25 && heroDetail.games < 39 && WR >= 63.32) || 
-                                           (heroDetail.games >= 40 && WR >= 59.75)){
-                                            
-                                         // Search for localized name.
+                                        // Normal image.
+                                        if((heroDetail.games >= 10 && heroDetail.games < 15 && WR >= 70) || (heroDetail.games >= 15 && heroDetail.games < 25 && WR >= 66.65)){
+                                            conditionFullfilled = 1;
+                                            imgURL = '<img src="img/miniheroes/'; 
+                                            imgExtension = '.png';
+                                            imgStyle = 'display:inline;margin-top:30px;'
+                                        }
+                                                
+                                        // Burning image.    
+                                        if((heroDetail.games >= 25 && heroDetail.games < 39 && WR >= 63.32) || (heroDetail.games >= 40 && WR >= 59.75)){
+                                            conditionFullfilled = 1;
+                                            imgURL = '<img src="img/miniheroes_animated/flame/'; 
+                                            imgExtension = '.gif';
+                                            imgStyle = 'display:inline;';
+                                        } 
+                                        
+                                        if(conditionFullfilled == 1){
+                                        // Search for localized name.
                                         $.each(heroes, function(numa, heroes){
                                             if(heroDetail.hero_id == heroes.id)
-                                                $("#NotableHeroes").append('<img src="img/miniheroes_animated/flame/'+ heroes.name.substr(14) +'.gif" style="padding:0;display: inline;" title="'+WR+'% winrate ('+heroDetail.win+' wins) in '+heroDetail.games+' matches as '+heroes.localized_name+'">');
+                                                $("#NotableHeroes").append(imgURL+ heroes.name.substr(14) +imgExtension+'" style="'+imgStyle+'" title="'+WR+'% winrate ('+heroDetail.win+' wins) in '+heroDetail.games+' matches as '+heroes.localized_name+'">');
                                         });
-                                    }  
+                                        conditionFullfilled = 0;
+                                        }
                                 });
                             }
                         });
