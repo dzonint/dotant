@@ -446,7 +446,10 @@
                                     naziv = heroes.name.substr(14);
                                     // Table.
                                     if(player.personaname != null){
-                                        $("#Player"+i).html('<a href="?profile='+player.account_id+'">'+player.personaname+'</a>')
+                                        var Name = player.personaname;
+                                        if(player.personaname.length > 19)
+                                            Name = player.personaname.substring(0,19)+"...";
+                                        $("#Player"+i).html('<a href="?profile='+player.account_id+'">'+Name+'</a>')
                                     }
                                     else 
                                         $("#Player"+i).html("Anonymous");
@@ -464,16 +467,24 @@
                                     // Items inside table.
                          $.each(items.result.items, function(n, items){
                                 if([player.item_0, player.item_1, player.item_2, player.item_3, player.item_4, player.item_5].indexOf(items.id) > -1){
-                                    // Cutting out item_ part of the string.
-                                    var naziv = items.name.substring(5);
-                                    $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_eg.png" title="'+naziv+'">');
+                                    // Checking if item is a recipe.
+                                    if(items.recipe == 1)
+                                        var naziv = 'recipe';
+                                    else    
+                                        // Cutting out item_ part of the string.
+                                        var naziv = items.name.substring(5);
+                                    $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.name.substring(5)+'">');
                                 }
                              
                                 // Backpack.
                                 if([player.backpack_0, player.backpack_1, player.backpack_2].indexOf(items.id) > -1){
-                                    // Cutting out item_ part of the string.
-                                    var naziv = items.name.substring(5);
-                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_eg.png" title="'+naziv+'">');
+                                    // Checking if item is a recipe.
+                                    if(items.recipe == 1)
+                                        var naziv = 'recipe';
+                                    else 
+                                        // Cutting out item_ part of the string.
+                                        var naziv = items.name.substring(5);
+                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.name.substring(5)+'">');
                                 }
                             });    
                          
