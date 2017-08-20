@@ -593,7 +593,7 @@
                                     // Finding appropriate hero image.
                                     $.each(heroes, function(numa, heroes){
                                         if(response[num].hero_id == heroes.id)
-                                            heroImage = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_eg.png" alt="' + heroes.localized_name + '" style="margin-right: 3px;">';
+                                            heroImage = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_eg.png" title="' + heroes.localized_name + '" style="margin-right: 3px;">';
                                     });
                                     
                                     // Populating the hero fields.
