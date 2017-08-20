@@ -163,6 +163,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero0"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA0"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems0"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack0"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold0"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits0"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies0"></div>
@@ -175,6 +176,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero1"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA1"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems1"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack1"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold1"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits1"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies1"></div>
@@ -187,6 +189,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero2"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA2"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems2"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack2"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold2"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits2"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies2"></div>
@@ -199,6 +202,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero3"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA3"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems3"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack3"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold3"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits3"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies3"></div>
@@ -211,6 +215,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero4"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA4"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems4"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack4"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold4"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits4"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies4"></div>
@@ -225,6 +230,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero5"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA5"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems5"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack5"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold5"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits5"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies5"></div>
@@ -237,6 +243,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero6"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA6"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems6"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack6"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold6"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits6"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies6"></div>
@@ -249,6 +256,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero7"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA7"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems7"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack7"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold7"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits7"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies7"></div>
@@ -261,6 +269,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero8"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA8"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems8"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack8"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold8"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits8"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies8"></div>
@@ -273,6 +282,7 @@
                 <div class="DetailsTableCellHero" id="PlayerHero9"></div>
                 <div class="DetailsTableCellKDA" id="PlayerKDA9"></div>
                 <div class="DetailsTableCellItems" id="PlayerItems9"></div>
+                <div class="DetailsTableCellBackpack" id="PlayerBackpack9"></div>
                 <div class="DetailsTableCellGold" id="PlayerGold9"></div>
                 <div class="DetailsTableCellLastHits" id="PlayerLastHits9"></div>
                 <div class="DetailsTableCellDenies" id="PlayerDenies9"></div>
@@ -406,6 +416,7 @@
                 $("#PlayerGPM"+i).html('');
                 $("#PlayerXPM"+i).html('');
                 $("#PlayerItems"+i).html('');
+                $("#PlayerBackpack"+i).html('');
             }
             
             $.ajax({ // AJAX for match data. 
@@ -429,6 +440,7 @@
         
                      $.each(match.players, function(i, player) {
                         $("#PlayerItems"+i).html('');
+                         $("#PlayerBackpack"+i).html('');
                          $.each(heroes, function(j, heroes){
                                 if(player.hero_id == heroes.id){
                                     naziv = heroes.name.substr(14);
@@ -456,6 +468,13 @@
                                     var naziv = items.name.substring(5);
                                     $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_eg.png" title="'+naziv+'">');
                                 }
+                             
+                                // Backpack.
+                                if([player.backpack_0, player.backpack_1, player.backpack_2].indexOf(items.id) > -1){
+                                    // Cutting out item_ part of the string.
+                                    var naziv = items.name.substring(5);
+                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_eg.png" title="'+naziv+'">');
+                                }
                             });    
                          
                     });
@@ -481,6 +500,7 @@
                 $("#PlayerGPM"+i).html('');
                 $("#PlayerXPM"+i).html('');
                 $("#PlayerItems"+i).html('');
+                $("#PlayerBackpack"+i).html('');
             }
             
             // Empty out notable heroes.
