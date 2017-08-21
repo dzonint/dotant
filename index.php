@@ -54,7 +54,7 @@ if(!isset($_SESSION['hasVisited'])){
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nYou can find out more at github.com/dzonint/dotant.\n\nThis site has been visited <?= $counterVal; ?> times.');">DotaNT</a>
+          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nYou can find out more at github.com/dzonint/dotant.\n');">DotaNT</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
