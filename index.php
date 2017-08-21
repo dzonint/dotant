@@ -541,6 +541,7 @@
             
             // Check if a string (community name) is entered.
             if(isNaN(profile)) {
+                $('table').fadeOut();
                 $("#ProfileSearchBody").html('<tr><td colspan="3" style="text-align:center;">Generating results (it might take up to half a minute)...</td></tr>');
                 $("#ProfileSearchTable").fadeIn();
                 $.ajax({ // AJAX profile seach based on profile name.
@@ -735,7 +736,7 @@
                                         if(match.skill == skill_level.id)
                                             skillLevel = skill_level.name;
                                         else // This happens when skill:null in data, which leads to some profiles not showing if not included.
-                                            skillLevel = "Any";
+                                            skillLevel = "N/A";
                                     });
                                 
                                     // Finding out hero.
