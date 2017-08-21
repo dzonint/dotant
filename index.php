@@ -533,7 +533,8 @@
         
         // By default, function getProfile only gets recent matches (25 matches), due to it being a lot faster than a complete match history.
         // The 'fullMatchHistoryProfileID' argument gets used if 'Show complete match history' button on profile page is pressed.
-        function getProfile(profile, fullMatchHistoryProfileID){
+        // The 'fullMatchHistoryHeroID' argument gets used if hero name is clicked in hero name table.
+        function getProfile(profile, fullMatchHistoryProfileID, fullMatchHistoryHeroID){
             // Emptying out the match detail table.
             for(var i=0;i<10;i++){
                 $("#Player"+i).html('');
@@ -562,10 +563,13 @@
             $("#ProfileSearchTable").fadeOut();
             if(profile == 1) // Means it's sent from the search button and not the URL.
                 profile = $("#profileSearchID").val();
-            if(fullMatchHistoryProfileID != null){ // Means it's sent from 'Show full match history' button.
+            if(fullMatchHistoryProfileID != null){ // Means it's sent from 'Show complete match history' button.
                 profile = fullMatchHistoryProfileID;
                 $('.pagination').fadeOut();
-                $("#ProfileFullMatches").html('<tr><td colspan="11" style="text-align:center;">Fetching full match history...</td></tr>');
+                if(fullMatchHistoryHeroID != null)
+                    $("#ProfileFullMatches").html('<tr><td colspan="11" style="text-align:center;">Fetching specific hero match history...</td></tr>');
+                else
+                    $("#ProfileFullMatches").html('<tr><td colspan="11" style="text-align:center;">Fetching full match history...</td></tr>');
                 $("#ProfileFullMatchHistoryTable").fadeIn();
             }
             else
@@ -635,7 +639,7 @@
                     // The only difference is in argument number. ID = 1 means recent matches, ID = 2 means full match history.
                     (fullMatchHistoryProfileID != null) ? smID = 2 : smID = 1;
                     $("#ProfileName").html('<h1 style=\"font-size: 16pt;margin-top:0!important;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><a href="#" id="showMatches" onclick="showMatches('+smID+');"><small> Matches </small></a><a href="#" id="showHeroes" onclick="showHeroes();"><small> Heroes</small></a>');
-                    if(fullMatchHistoryProfileID == null)
+                    if(fullMatchHistoryProfileID == null || fullMatchHistoryHeroID != null)
                         $("#ProfileName").append('<br><a href="#" id="CompleteMatchHistoryBtn"><small style="font-size:6.5pt;color:#d7cfe0;">Show complete match history</small></a>');
             
                     if(response.solo_competitive_rank != null){ // Sometimes people have solo but not party MMR.
@@ -694,7 +698,7 @@
                                     // Getting hero name and image. 
                                     $.each(heroes, function(numa, heroes){
                                         if(heroDetail.hero_id == heroes.id)
-                                            heroData = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_sb.png" style="margin-right: 15px;">'+'<strong style="text-align:center">'+heroes.localized_name+'</strong></td>';
+                                            heroData = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_sb.png" style="margin-right: 15px;">'+'<a href="#" onclick="getProfile(1,'+profile+','+heroes.id+')"><strong style="text-align:center">'+heroes.localized_name+'</strong></a></td>';
                                     });
                                     
                                     var LastPlayedDate = new Date(heroDetail.last_played * 1000);
@@ -755,9 +759,11 @@
                 if(fullMatchHistoryProfileID != null){ // Means we are already on profile page and are getting a complete match history this time. We use fullMatchHistoryProfileID we added to the button the first time.
                     AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/Matches';
                     $("#ProfileFullMatchHistoryTable").fadeOut();
-                    $("#ProfileFullMatches").html('');   
+                    $("#ProfileFullMatches").html('');
+                    if(fullMatchHistoryHeroID != null) // Means user clicked on hero's name on hero table.
+                        AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/Matches?hero_id='+fullMatchHistoryHeroID;
                 } else 
-                    AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/recentMatches';    
+                    AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/recentMatches';
                     $.ajax({
                         url: AjaxProfileURL,
                         async: false,
@@ -839,10 +845,10 @@
                         // Need to do it twice for some reason.
                         sorttable.makeSortable(newTableObject); 
                         sorttable.makeSortable(newTableObject);
-                        $("#CompleteMatchHistoryBtn").attr('onclick', 'getProfile(1,'+profile+')');
                         Pagination("#ProfileRecentMatchesTable");
                         $("#ProfileRecentMatchesTable").fadeIn();
                     }
+                    $("#CompleteMatchHistoryBtn").attr('onclick', 'getProfile(1,'+profile+')');
                     $(".pagination").fadeIn();
                 }
             });  
