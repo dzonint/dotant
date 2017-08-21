@@ -1,28 +1,4 @@
 <!doctype html>
-<?php
-// Site views counter.
-session_start();
-$counter_name = "counter.txt";
-// Check if a text file exists. If not create one and initialize it to zero.
-if (!file_exists($counter_name)) {
-  $f = fopen($counter_name, "w");
-  fwrite($f,"0");
-  fclose($f);
-}
-// Read the current value of our counter file
-$f = fopen($counter_name,"r");
-$counterVal = fread($f, filesize($counter_name));
-fclose($f);
-// Has visitor been counted in this session?
-// If not, increase counter value by one
-if(!isset($_SESSION['hasVisited'])){
-  $_SESSION['hasVisited']="yes";
-  $counterVal++;
-  $f = fopen($counter_name, "w");
-  fwrite($f, $counterVal);
-  fclose($f); 
-}
-?>
 <html>
 	<head>
 		<title>DotaNT</title>
@@ -30,20 +6,15 @@ if(!isset($_SESSION['hasVisited'])){
 		<meta name="viewport" content="initial-scale=1.0">
         <meta name="author" content="TDD - dzonint@yahoo.com">
 
-<!-- NOTE : dota2_publicheader => http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.svg gives 404 error. -->
 <link rel="stylesheet" type="text/css" href="css/bootstrap_3.3.7_min.css">
-<link rel="stylesheet" type="text/css" href="css/dota2_global.css">
-<link rel="stylesheet" type="text/css" href="css/dota2_global_english.css">
-<link rel="stylesheet" type="text/css" href="css/dota2_publicheader.css">
-<link rel="stylesheet" type="text/css" href="css/dota2_jquery.tournamentschedule.css">
-<link rel="stylesheet" type="text/css" href="css/profileTable.css">
+<link rel="stylesheet" type="text/css" href="css/dota.css">
 <script src="script/jquery_3.2.1_min.js"></script>
 <script src="script/bootstrap_3.3.7_min.js"></script>
 <!-- Add class "sortable" to tables you want to be sortable, add class "sorttable_nosort" to columns you don't want to be sortable. -->
 <script src="script/sorttable.js"></script>
 	</head>
 
-<body background="img/Background.png" style="background-size: cover; background-attachment: fixed; background-repeat: no-repeat;"> 
+<body background="img/Background.png"> 
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
@@ -103,9 +74,7 @@ if(!isset($_SESSION['hasVisited'])){
          <th id="ProfileName" style="width:12%;"></th>
          <th style="width:29%;padding:0;">
             <ul style="list-style:none;">
-                <li id="NotableHeroes"> 
-                    <!--<small style="float:left;padding-bottom:2px;">Notable heroes</small>-->
-                </li> 
+                <li id="NotableHeroes"></li> 
             </ul>
           </th>
          <th style="width:33%;">
@@ -139,10 +108,10 @@ if(!isset($_SESSION['hasVisited'])){
             <tr style="background-color: #383c47" id="ProfileRecentMatchesHeader"> 
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Match ID</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center; color:#d7cfe0;">Date</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Match duration</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Duration</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Skill</th>
-                <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Game mode</th>
-                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;width:16%;">Hero</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Mode</th>
+                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;">Hero</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">K/D/A</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">GPM</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">XPM</th>
@@ -734,7 +703,7 @@ if(!isset($_SESSION['hasVisited'])){
                                 +'<td style="text-align: center;">' + Math.floor(match.duration / 60) + ':' + Math.floor(match.duration % 60) + '</td>'
                                 +'<td style="text-align: center;">' + skillLevel + '</td>' 
                                 +'<td style="text-align: center;">' + gameMode + '</td>' 
-                                +'<td colspan="2" style="padding-left:10px;">' + hero + '</td>' 
+                                +'<td colspan="2" style="min-width:200px;padding-left:18px;">' + hero + '</td>' 
                                 +'<td style="text-align: center;">' + match.kills + '/' + match.deaths + '/' + match.assists + '</td>'
                                 +'<td style="text-align: center;">' + match.gold_per_min + '</td>'
                                 +'<td style="text-align: center;">' + match.xp_per_min + '</td>'
