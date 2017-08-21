@@ -38,11 +38,11 @@
               
                 <li class="MatchSearch"><a><label style="color:#959595">Enter a match ID:</label></a></li>
                 <li class="MatchSearch"><a><input type="text" name="matchSearchID" id="matchSearchID"/></a></li>
-                <li class="MatchSearch"><a><input class="btn btn-success btn-sm" type="button" onclick="getMatch(1);" value="Search"></a></li>
+                <li class="MatchSearch"><a><input class="btn btn-success btn-sm" id="matchSearchBtn" type="button" onclick="getMatch(1);" value="Search"></a></li>
                 
-                <li class="ProfileSearch"><a><label style="color:#959595">Enter a profile ID:</label></a></li>
+                <li class="ProfileSearch"><a><label style="color:#959595"><span title="Searches based on id are instant, while the ones based on profile name take more time." style="color:red;">!</span> Enter a profile ID:</label></a></li>
                 <li class="ProfileSearch"><a><input type="text" name="profileSearchID" id="profileSearchID"/></a></li>
-                <li class="ProfileSearch"><a><input class="btn btn-success btn-sm" type="button" onclick="getProfile(1);" value="Search"></a></li>
+                <li class="ProfileSearch"><a><input class="btn btn-success btn-sm" id="profileSearchBtn" type="button" onclick="getProfile(1);" value="Search"></a></li>
           </ul>
         </div>
       </div>
@@ -65,10 +65,21 @@
         <tbody id="RecentMatches"></tbody>
     </table>
     
+    <!-- PROFILE SEARCH TABLE -->
+    <table id="ProfileSearchTable" class="container">
+        <thead>
+            <tr style="background-color:#3c414c;">
+                <th style="text-align:center;padding-right:20px;width:10%;">Avatar</th>
+                <th style="text-align:center;width:70%;">Name</th>
+                <th style="text-align:center;width:20%;">Last match</th>
+            </tr> 
+        </thead>
+        <tbody id="ProfileSearchBody"></tbody>
+    </table>
+    
         <!-- PROFILE DATA TABLE -->
 <table id="ProfileDataTable" class="container">
    <thead>
-    <!-- Avatar : 5%, Name : 20%, TBD: 23%, Matches: 30%, MMR: 22%. -->
       <tr style="background-color: #353943;">
          <th id="ProfileAvatar" ></th>
          <th id="ProfileName" style="width:12%;"></th>
@@ -294,10 +305,19 @@
         $(function(){ 
                     $('.ProfileSearch').toggle();
                     $('.SearchMatchesText').toggle();
-                    $("#ProfileRecentMatchesTable").hide();
-                    $("#ProfileHeroesTable").hide();
-                    $("#ProfileDataTable").hide();
-                    $("#RecentMatchesTable").hide();
+                    $('table').hide();
+            
+                    $('#profileSearchID').keypress(function(e){
+                        if(e.which == 13){//Enter key pressed
+                            $('#profileSearchBtn').click();//Trigger search button click event
+                        }
+                    });
+            
+                    $('#matchSearchID').keypress(function(e){
+                        if(e.which == 13){//Enter key pressed
+                            $('#matchSearchBtn').click();//Trigger search button click event
+                        }
+                    });
             
                     <?php if(isset($_REQUEST['profile'])){
                         // If we get 64bit ID in the URL, we will convert here instead of using AJAX in the getProfile function.
@@ -515,8 +535,46 @@
             $("#ProfileRecentMatchesTable").fadeOut();
             $("#ProfileHeroesTable").fadeOut();
             $("#ProfileDataTable").fadeOut();
+            $("#ProfileSearchTable").fadeOut();
             if(profile == 1) // Means it's sent from the search button and not the URL.
                  profile = $("#profileSearchID").val();
+            
+            // Check if a string (community name) is entered.
+            if(isNaN(profile)) {
+                $("#ProfileSearchBody").html('<tr><td colspan="3" style="text-align:center;">Generating results (it might take up to half a minute)...</td></tr>');
+                $("#ProfileSearchTable").fadeIn();
+                $.ajax({ // AJAX profile seach based on profile name.
+                    url: 'https://api.opendota.com/api/search?q='+profile+'&similarity=0.7',
+                    success: function(res){
+                        $("#ProfileSearchBody").fadeOut();
+                        $("#ProfileSearchBody").html('');
+                        if (res[0] == null) // If the first object is empty, that means there are no other objects either.
+                            $("#ProfileSearchBody").html('<tr><td colspan="3" style="text-align:center;">No profiles found.</td></tr>');
+                        else
+                            $.each(res, function(pr, profile){
+                                accountID = profile.account_id;
+                                profileAvatar = profile.avatarfull.replace("full", "medium");
+                                profileName = profile.personaname;
+                                ProfileInfo = '<a href="?profile='+accountID+'">'+profileName+'</a>';
+                                if(profile.last_match_time != null)
+                                    profileLastMatch = profile.last_match_time.toString().substring(0,10);
+                                else
+                                    profileLastMatch = "Never";
+
+                                $("#ProfileSearchBody").append('<tr>'
+                                +'<td><img src="'+profileAvatar+'"></td>'
+                                +'<td style="text-align: center;">'+ProfileInfo+'</td>'
+                                +'<td style="text-align: center;">'+profileLastMatch+'</td>'
+                                +'</tr>'
+                                );
+                            });
+                        $("#ProfileSearchBody").fadeIn(); 
+                    }
+                });
+              return; // Exit function early.
+            }
+            
+            // Profile ID was entered.
             if(profile.length > 10){ // Making sure given profile ID is 32 bit since that is what API uses. 
                 $.ajax({ // AJAX profile ID conversion.
                     url: 'ProfileIDFunction.php',
@@ -532,14 +590,8 @@
                 url: 'https://api.opendota.com/api/players/'+profile,
                 async: true,
                 success: function(response){
-                    // Invalid profiles will provide this output: {"tracked_until":null,"solo_competitive_rank":null,"competitive_rank":null}
-                    // Thus, we check if there are 3 elements inside the object.
-                    var elementCount = 0;
-                    $.each(response, function(a, resp){
-                        elementCount++;
-                    });
-                    if(elementCount == 3){
-                        alert('Profile not found (or the user does not play Dota).');
+                    if(response.profile == null){
+                        alert('Profile not found.');
                         return;
                     }
 
@@ -663,7 +715,7 @@
                     $.ajax({
                         url: 'https://api.opendota.com/api/players/'+profile+'/recentMatches',
                         async: false,
-                        success: function(response){  
+                        success: function(response){
                             $.each(response, function(i, match){ 
                                    // Finding out game mode. 
                                     $.each(game_modes, function(j, game_mode){
@@ -681,7 +733,9 @@
                                     // Finding out skill level.
                                     $.each(skill_level, function(k, skill_level){
                                         if(match.skill == skill_level.id)
-                                            skillLevel = skill_level.name; 
+                                            skillLevel = skill_level.name;
+                                        else // This happens when skill:null in data, which leads to some profiles not showing if not included.
+                                            skillLevel = "Any";
                                     });
                                 
                                     // Finding out hero.
