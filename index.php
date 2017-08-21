@@ -1,5 +1,28 @@
 <!doctype html>
-
+<?php
+// Site views counter.
+session_start();
+$counter_name = "counter.txt";
+// Check if a text file exists. If not create one and initialize it to zero.
+if (!file_exists($counter_name)) {
+  $f = fopen($counter_name, "w");
+  fwrite($f,"0");
+  fclose($f);
+}
+// Read the current value of our counter file
+$f = fopen($counter_name,"r");
+$counterVal = fread($f, filesize($counter_name));
+fclose($f);
+// Has visitor been counted in this session?
+// If not, increase counter value by one
+if(!isset($_SESSION['hasVisited'])){
+  $_SESSION['hasVisited']="yes";
+  $counterVal++;
+  $f = fopen($counter_name, "w");
+  fwrite($f, $counterVal);
+  fclose($f); 
+}
+?>
 <html>
 	<head>
 		<title>DotaNT</title>
@@ -31,7 +54,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nYou can find out more at github.com/dzonint/dotant.');">DotaNT</a>
+          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nYou can find out more at github.com/dzonint/dotant.\n\nThis site has been visited <?= $counterVal; ?> times.');">DotaNT</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
