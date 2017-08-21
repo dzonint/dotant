@@ -31,7 +31,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nCreated by TDD.');">DotaNT</a>
+          <a class="navbar-brand" href="#" onclick="alert('DotaNT is a simple Dota 2 match analyzer that uses OpenDota API.\nYou can find out more at github.com/dzonint/dotant.');">DotaNT</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
