@@ -50,7 +50,7 @@
     
         <!-- RECENT MATCHES TABLE -->
     <table id="RecentMatchesTable" class="container">
-        <thead>
+        <thead> 
             <tr style="background-color:#3c414c;">
                 <th style="text-align:center;">Match ID</th>
                 <th style="text-align:center;">Average MMR</th>
@@ -115,22 +115,39 @@
     
         <!-- PROFILE RECENT MATCHES TABLE -->
     <table id="ProfileRecentMatchesTable" class="container sortable">
-        <thead>
-            <tr style="background-color: #383c47" id="ProfileRecentMatchesHeader"> 
+        <thead id="ProfileRecentMatchesHeader">
+            <tr style="background-color: #383c47"> 
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Match ID</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center; color:#d7cfe0;">Date</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Duration</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Skill</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">Mode</th>
-                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;">Hero</th>
+                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;color:#d7cfe0;">Hero</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;" class="sorttable_nosort">K/D/A</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">GPM</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;width:9%; color:#d7cfe0;">XPM</th>
                 <th style="font-size:16pt;font-weight: bold; text-align: center;width:12%; color:#d7cfe0;">Outcome</th>
             </tr>
         </thead>
-        <tbody id="ProfileMatches"></tbody>
-    </table> 
+        <tbody id="ProfileRecentMatches"></tbody>
+    </table>
+
+    <!-- PROFILE FULL MATCH HISTORY TABLE -->
+    <table id="ProfileFullMatchHistoryTable" class="container">
+        <thead>
+            <tr style="background-color: #383c47" id="ProfileFullMatchHistoryHeader"> 
+                <th style="font-size:16pt;font-weight: bold; text-align: center;">Match ID</th>
+                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;">Date</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;">Duration</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;">Skill</th>
+                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;">Mode</th>
+                <th colspan="2" style="font-size:16pt;font-weight: bold; text-align: center;">Hero</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;">K/D/A</th>
+                <th style="font-size:16pt;font-weight: bold; text-align: center;width:12%;">Outcome</th>
+            </tr>
+        </thead>
+        <tbody id="ProfileFullMatches"></tbody>
+    </table>
     
         <!--  PROFILE HEROES TABLE -->
     <table id="ProfileHeroesTable" class="container sortable">
@@ -296,6 +313,12 @@
         <!-- <button type="button" onclick="makeSnapshot();" style="margin-top: 6cm;margin-left: 22cm; background-color: #337ab7"> Make a screenshot </button> -->
     </div>
 </div>
+    
+    <div class="pagination-container container">
+        <nav>
+            <ul class="pagination" style="text-align:center;"></ul>
+        </nav>
+    </div>
 	</body>
     
     <!-- JSON DATA -->
@@ -394,12 +417,10 @@
                             +'</tr>'
                         );
                     });
-                }
+                } 
             });
-            /*var newTableObject = document.getElementById('RecentMatchesTable');
-            sorttable.makeSortable(newTableObject); */
-            $("#RecentMatchesTable").fadeIn();
-            
+            // We give it 500ms so it can pick up the number of total rows. (otherwise it just picks up 0 and does nothing)
+            setTimeout(function (){Pagination("#RecentMatchesTable");$("#RecentMatchesTable").fadeIn();}, 500);
         }
         
         function toggleSearch(){
@@ -510,7 +531,9 @@
             });    
         } 
         
-        function getProfile(profile){
+        // By default, function getProfile only gets recent matches (25 matches), due to it being a lot faster than a complete match history.
+        // The 'fullMatchHistoryProfileID' argument gets used if 'Show complete match history' button on profile page is pressed.
+        function getProfile(profile, fullMatchHistoryProfileID){
             // Emptying out the match detail table.
             for(var i=0;i<10;i++){
                 $("#Player"+i).html('');
@@ -531,16 +554,24 @@
             
             // Emptying out the recent matches and heroes.
             $("#ProfileRecentMatchesTable tbody").empty();
+            $("#ProfileFullMatchHistoryTable tbody").empty();
             $("#ProfileHeroesTable tbody").empty();
             $("#ProfileRecentMatchesTable").fadeOut();
+            $("#ProfileFullMatchHistoryTable").fadeOut();
             $("#ProfileHeroesTable").fadeOut();
-            $("#ProfileDataTable").fadeOut();
             $("#ProfileSearchTable").fadeOut();
             if(profile == 1) // Means it's sent from the search button and not the URL.
-                 profile = $("#profileSearchID").val();
-            
+                profile = $("#profileSearchID").val();
+            if(fullMatchHistoryProfileID != null){ // Means it's sent from 'Show full match history' button.
+                profile = fullMatchHistoryProfileID;
+                $("#ProfileFullMatches").html('<tr><td colspan="11" style="text-align:center;">Fetching full match history...</td></tr>');
+                $("#ProfileFullMatchHistoryTable").fadeIn();
+            }
+            else
+                $("#ProfileDataTable").fadeOut();
             // Check if a string (community name) is entered.
             if(isNaN(profile)) {
+                $(".pagination").fadeOut();
                 $('table').fadeOut();
                 $("#ProfileSearchBody").html('<tr><td colspan="3" style="text-align:center;">Generating results (it might take up to half a minute)...</td></tr>');
                 $("#ProfileSearchTable").fadeIn();
@@ -569,7 +600,9 @@
                                 +'</tr>'
                                 );
                             });
-                        $("#ProfileSearchBody").fadeIn(); 
+                        Pagination('#ProfileSearchTable');
+                        $("#ProfileSearchBody").fadeIn();
+                        $(".pagination").fadeIn();
                     }
                 });
               return; // Exit function early.
@@ -595,10 +628,15 @@
                         alert('Profile not found.');
                         return;
                     }
-
+                    $('#RecentMatchesTable').fadeOut(); // In case user comes from recent matches table.
                     // If it passed the check, then it means that the profile was found and we can get the necessary information.
                     $("#ProfileAvatar").html('<img style=\"height: 96px;width: auto;\" src="' + response.profile.avatarmedium + '">');
-                    $("#ProfileName").html('<h1 style=\"font-size: 16pt;margin-top:0!important;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><a href="#" id="showMatches" onclick="showMatches();"><small> Matches </small></a><a href="#" id="showHeroes" onclick="showHeroes();"><small> Heroes</small></a>');
+                    // The only difference is in argument number. ID = 1 means recent matches, ID = 2 means full match history.
+                    (fullMatchHistoryProfileID != null) ? smID = 2 : smID = 1;
+                    $("#ProfileName").html('<h1 style=\"font-size: 16pt;margin-top:0!important;\"><a href="'+response.profile.profileurl+'">'+ response.profile.personaname +'</a></h1><a href="#" id="showMatches" onclick="showMatches('+smID+');"><small> Matches </small></a><a href="#" id="showHeroes" onclick="showHeroes();"><small> Heroes</small></a>');
+                    if(fullMatchHistoryProfileID == null)
+                        $("#ProfileName").append('<br><a href="#" id="CompleteMatchHistoryBtn"><small style="font-size:6.5pt;color:#d7cfe0;">Show complete match history</small></a>');
+            
                     if(response.solo_competitive_rank != null){ // Sometimes people have solo but not party MMR.
                         $("#SoloMMR").html('<h1>Solo MMR<br><strong style=\"color:#a29ca9;\">'+response.solo_competitive_rank+'</strong></h1>');
                         if(response.competitive_rank != null)
@@ -711,10 +749,16 @@
                                 });
                             }
                         });
-                   
-                // AJAX for recent matches.
+                  
+                // AJAX for profile matches.
+                if(fullMatchHistoryProfileID != null){ // Means we are already on profile page and are getting a complete match history this time. We use fullMatchHistoryProfileID we added to the button the first time.
+                    AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/Matches';
+                    $("#ProfileFullMatchHistoryTable").fadeOut();
+                    $("#ProfileFullMatches").html('');   
+                } else 
+                    AjaxProfileURL = 'https://api.opendota.com/api/players/'+profile+'/recentMatches';    
                     $.ajax({
-                        url: 'https://api.opendota.com/api/players/'+profile+'/recentMatches',
+                        url: AjaxProfileURL,
                         async: false,
                         success: function(response){
                             $.each(response, function(i, match){ 
@@ -751,50 +795,115 @@
                                     else 
                                         outcome = '<strong style="color:red;">Loss</strong>';
                                 var MatchDate = new Date(match.start_time * 1000);
-                                $("#ProfileMatches").append(
-                                '<tr>'
-                                +'<td style="text-align: center;"><a href="#" style=\"font-size: 120%;\" onclick=getMatch('+match.match_id+');>' + match.match_id + '</a></td>'    
-                                +'<td style="text-align: center;">' + MatchDate.toString().substring(4,24) + '</td>'
-                                +'<td style="text-align: center;">' + Math.floor(match.duration / 60) + ':' + Math.floor(match.duration % 60) + '</td>'
-                                +'<td style="text-align: center;">' + skillLevel + '</td>' 
-                                +'<td style="text-align: center;">' + gameMode + '</td>' 
-                                +'<td colspan="2" style="min-width:200px;padding-left:18px;">' + hero + '</td>' 
-                                +'<td style="text-align: center;">' + match.kills + '/' + match.deaths + '/' + match.assists + '</td>'
-                                +'<td style="text-align: center;">' + match.gold_per_min + '</td>'
-                                +'<td style="text-align: center;">' + match.xp_per_min + '</td>'
-                                +'<td style="text-align: center;">' + outcome + '</td>' // TO-DO
-                                +'</tr>'
-                                ); 
+        
+                                if(fullMatchHistoryProfileID != null)
+                                    $("#ProfileFullMatches").append(
+                                    '<tr>'
+                                    +'<td style="text-align: center;"><a href="#" style=\"font-size: 120%;\" onclick=getMatch('+match.match_id+');>' + match.match_id + '</a></td>'    
+                                    +'<td colspan="2" style="text-align: center;">' + MatchDate.toString().substring(4,24) + '</td>'
+                                    +'<td style="text-align: center;">' + Math.floor(match.duration / 60) + ':' + Math.floor(match.duration % 60) + '</td>'
+                                    +'<td style="text-align: center;">' + skillLevel + '</td>' 
+                                    +'<td colspan="2" style="text-align: center;">' + gameMode + '</td>' 
+                                    +'<td colspan="2" style="min-width:200px;padding-left:18px;">' + hero + '</td>' 
+                                    +'<td style="text-align: center;">' + match.kills + '/' + match.deaths + '/' + match.assists + '</td>'
+                                    +'<td style="text-align: center;">' + outcome + '</td>' // TO-DO
+                                    +'</tr>'
+                                    );
+                                else
+                                    $("#ProfileRecentMatches").append(
+                                    '<tr>'
+                                    +'<td style="text-align: center;"><a href="#" style=\"font-size: 120%;\" onclick=getMatch('+match.match_id+');>' + match.match_id + '</a></td>'    
+                                    +'<td style="text-align: center;font-size:90%;">' + MatchDate.toString().substring(4,24) + '</td>'
+                                    +'<td style="text-align: center;">' + Math.floor(match.duration / 60) + ':' + Math.floor(match.duration % 60) + '</td>'
+                                    +'<td style="text-align: center;">' + skillLevel + '</td>' 
+                                    +'<td style="text-align: center;">' + gameMode + '</td>' 
+                                    +'<td colspan="2" style="min-width:200px;padding-left:18px;">' + hero + '</td>' 
+                                    +'<td style="text-align: center;">' + match.kills + '/' + match.deaths + '/' + match.assists + '</td>'
+                                    +'<td style="text-align: center;">' + match.gold_per_min + '</td>'
+                                    +'<td style="text-align: center;">' + match.xp_per_min + '</td>'
+                                    +'<td style="text-align: center;">' + outcome + '</td>' // TO-DO
+                                    +'</tr>'
+                                    );
                             });
                         } 
                     });
-                     
                     $("#showMatches").css('background-color','#3c414c');
                     $("#ProfileDataTable").fadeIn();
-                    $("#ProfileRecentMatchesTable").fadeIn();
-                    var newTableObject = document.getElementById('ProfileRecentMatchesTable');
-                    // Need to do it twice for some reason.
-                    sorttable.makeSortable(newTableObject); 
-                    sorttable.makeSortable(newTableObject); 
+                    if(fullMatchHistoryProfileID != null) {
+                        var newTableObject = document.getElementById('ProfileFullMatchHistoryTable');
+                        Pagination("#ProfileFullMatchHistoryTable");
+                        $("#ProfileFullMatchHistoryTable").fadeIn();
+                    } else {
+                        var newTableObject = document.getElementById('ProfileRecentMatchesTable');
+                        // Need to do it twice for some reason.
+                        sorttable.makeSortable(newTableObject); 
+                        sorttable.makeSortable(newTableObject);
+                        $("#CompleteMatchHistoryBtn").attr('onclick', 'getProfile(1,'+profile+')');
+                        Pagination("#ProfileRecentMatchesTable");
+                        $("#ProfileRecentMatchesTable").fadeIn();
+                    }
+                    $(".pagination").fadeIn();
                 }
             });  
         }
         
-        function showMatches(){
+        function showMatches(id){
             $("#showHeroes").css("background-color", ""); 
-            $("#showMatches").css('background-color','#3c414c');
+            $("#showMatches").css('background-color','#3c414c');   
             $("#ProfileHeroesTable").fadeOut();
-            $("#ProfileRecentMatchesTable").fadeIn();
+            
+            if(id != 2)
+                $("#ProfileRecentMatchesTable").fadeIn();
+            else
+                $("#ProfileFullMatchHistoryTable").fadeIn();
+            $(".pagination").fadeIn();
         }
         
         function showHeroes(){
             $("#showMatches").css("background-color", ""); 
             $("#showHeroes").css('background-color','#3c414c');
             $("#ProfileRecentMatchesTable").fadeOut();
+            $("#ProfileFullMatchHistoryTable").fadeOut();
+            $(".pagination").fadeOut();
             var newTableObject = document.getElementById('ProfileHeroesTable');
             sorttable.makeSortable(newTableObject); 
             sorttable.makeSortable(newTableObject);
             $("#ProfileHeroesTable").fadeIn();
+        }
+        
+        function Pagination(tableID){ 
+            var table = tableID;
+            $('.pagination').html('');
+            var trnum = 0 ;	
+            var maxRows = 10; 
+            var totalRows = $(table+' tbody tr').length;
+                $(table+' tr:gt(0)').each(function(){	
+                    trnum++;				
+                    if (trnum > maxRows ){		
+                        $(this).hide();		
+                    }if (trnum <= maxRows ){$(this).show();}
+                });										
+            if (totalRows > maxRows){						
+                var pagenum = Math.ceil(totalRows/maxRows);	
+                for (var i = 1; i <= pagenum ;){
+                    $('.pagination').append('<li data-page="'+i+'">\
+                                            <span>'+ i++ +'<span class="sr-only">(current)</span></span>\
+                                            </li>').show();
+                    }											
+            } 												
+            $('.pagination li:first-child').addClass('active');
+            $('.pagination li').on('click',function(){	
+                var pageNum = $(this).attr('data-page');
+                var trIndex = 0 ;						
+                $('.pagination li').removeClass('active');
+                $(this).addClass('active');				 
+                $(table+' tr:gt(0)').each(function(){	
+                    trIndex++;	
+                    if (trIndex > (maxRows*pageNum) || trIndex <= ((maxRows*pageNum)-maxRows)){
+                         $(this).hide();		
+                    }else {$(this).show();} 				
+                }); 										
+            });
         }
     </script>
 </html>
