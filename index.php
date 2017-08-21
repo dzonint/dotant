@@ -564,6 +564,7 @@
                 profile = $("#profileSearchID").val();
             if(fullMatchHistoryProfileID != null){ // Means it's sent from 'Show full match history' button.
                 profile = fullMatchHistoryProfileID;
+                $('.pagination').fadeOut();
                 $("#ProfileFullMatches").html('<tr><td colspan="11" style="text-align:center;">Fetching full match history...</td></tr>');
                 $("#ProfileFullMatchHistoryTable").fadeIn();
             }
