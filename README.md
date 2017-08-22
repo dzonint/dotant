@@ -6,7 +6,9 @@ The app is hosted on https://dotant.herokuapp.com.
 You can add parameters 'match' and 'profile' to the URL to instantly load requested resources e.g.
 https://dotant.herokuapp.com/?profile=64836543&match=3363644373
 
-History
+
+
+#History
 
 I remember seeing on Dota 2 TI website a feature where you could click on a scoreboard and it would pop up an image containing all the match details (click reveal all > scoreboard). I was thinking to myself that it was a pretty cool feature, and that I wanted to do some new project anyway, so I decided to try making some Dota 2 match analyzer site thing. I was struggling for a few days finding suitable framework to work with (wasn't really in a mood to start learning node.js and such), but then I saw OpenAI playing against Dota 2 player news article and read that they used OpenDota API to fetch all the replays AI used to learn and thought that that API was just the thing I needed which I can use with jQuery + AJAX calls.
 
