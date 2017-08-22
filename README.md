@@ -8,28 +8,22 @@ https://dotant.herokuapp.com/?profile=64836543&match=3363644373
 
 
 
-#History
+## History
 
-I remember seeing on Dota 2 TI website a feature where you could click on a scoreboard and it would pop up an image containing all the match details (click reveal all > scoreboard). I was thinking to myself that it was a pretty cool feature, and that I wanted to do some new project anyway, so I decided to try making some Dota 2 match analyzer site thing. I was struggling for a few days finding suitable framework to work with (wasn't really in a mood to start learning node.js and such), but then I saw OpenAI playing against Dota 2 player news article and read that they used OpenDota API to fetch all the replays AI used to learn and thought that that API was just the thing I needed which I can use with jQuery + AJAX calls.
+I remember seeing on [Dota 2 TI website](http://www.dota2.com/international/replays/?l=english) a feature where you could click on a scoreboard and it would pop up an image containing all the match details (click reveal all > scoreboard). I was thinking to myself that it was a pretty cool feature, and that I wanted to do some new project anyway, so I decided to try making some Dota 2 match analyzer site thing. I was struggling for a few days finding suitable framework to work with (wasn't really in a mood to start learning node.js and such), but then I saw OpenAI playing against Dota 2 player news article and read that they used [OpenDota API](https://docs.opendota.com/) to fetch all the replays AI used to learn and thought that that API was just the thing I needed which I can use with jQuery + AJAX calls.
 
 The app is hosted on https://dotant.herokuapp.com. The app pretty much works by inserting AJAX request results into HTML tables via jQuery which then hide or show depending on the button pressed.
 
 The app first displays the latest 20 matches user played and the user's hero stats. It also shows hero icons next to the user's name depending if the user fullfilled the following criteria :
-
-> Checking if the user has a great winrate with hero.
-
->  Normal image :
-
->  10 - 14 games played - 70% winrate (has to win 7 out of 9 / 10 out of 14 matches)
-
->  15 - 24 games played - 66.66% winrate (has to win 10 out of 15 / 16 out of 24 matches)
-
->  Burning image :
-
-> 25 - 39 games played - 63.33% winrate (has to win 16 out of 25 / 25 out of 39 matches)
-
-> 40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches etc.) */
-
+```
+/* Checking if the user has a great winrate with hero.
+/*  Normal image :
+/*  10 - 14 games played - 70% winrate (has to win 7 out of 9 / 10 out of 14 matches)
+/*  15 - 24 games played - 66.66% winrate (has to win 10 out of 15 / 16 out of 24 matches)
+/*  Burning image :
+/* 25 - 39 games played - 63.33% winrate (has to win 16 out of 25 / 25 out of 39 matches)
+/* 40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches etc.) */
+```
 
 I tried to be as inclusive as possible, the images are supposed to be relative as in if you're 2k and have a burning image that doesn't mean you are 5k with that hero, it means that you could consider using that hero to climb the ladder since you have a significant winrate with him in your bracket.
 
