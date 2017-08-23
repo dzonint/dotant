@@ -21,8 +21,8 @@ The app first displays the latest 20 matches user played and the user's hero sta
 /*  10 - 14 games played - 70% winrate (has to win 7 out of 9 / 10 out of 14 matches)
 /*  15 - 24 games played - 66.66% winrate (has to win 10 out of 15 / 16 out of 24 matches)
 /*  Burning image :
-/* 25 - 39 games played - 63.33% winrate (has to win 16 out of 25 / 25 out of 39 matches)
-/* 40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches etc.) */
+/*  25 - 39 games played - 63.33% winrate (has to win 16 out of 25 / 25 out of 39 matches)
+/*  40 games and more played - 59.75%  winrate (has to win 24 out of 40 / 48 out of 80 / 60 out of 100 matches etc.) */
 ```
 
 I tried to be as inclusive as possible, the images are supposed to be relative as in if you're 2k and have a burning image that doesn't mean you are 5k with that hero, it means that you could consider using that hero to climb the ladder since you have a significant winrate with him in your bracket.
