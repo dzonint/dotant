@@ -1,4 +1,4 @@
-# dotant
+# DotaNT
 DotaNT is a simple Dota 2 match analyzer which uses OpenDota API via AJAX.
 
 The app is hosted on https://dotant.herokuapp.com.
