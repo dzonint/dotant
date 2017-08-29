@@ -312,7 +312,7 @@
                 <div class="DetailsTableCellXPMin" id="PlayerXPM9"></div>
             </div>
         </div>
-         <button type="button" onclick="makeSnapshot();" style="margin-top: 5.5cm;margin-left: 25cm; background-color: #337ab7"> Make a screenshot </button> 
+         <button type="button" onclick="makeSnapshot();" style="margin-top: 5.5cm;margin-left: 25cm; background-color: #337ab7" id="screenshotBtn"> Make a screenshot </button> 
     </div>
 </div>
     
@@ -917,13 +917,38 @@
         
         function makeSnapshot(){
             $("#close_details_button").hide();
+            $("#screenshotBtn").text('Uploading...');
+            var matchID = $("#MatchID").text();
                 html2canvas($("#MatchDetails"), {
                     onrendered: function(canvas) {
                         theCanvas = canvas;
-
+                        
+                        var dataURL = canvas.toDataURL();
+                        $.ajax({
+                                url: 'https://api.imgur.com/3/image',
+                                type: 'post',
+                                headers: {
+                                    Authorization: 'Client-ID 3aae1ba8061dc2f'
+                                },
+                                data: {
+                                    image: dataURL.substring(22),
+                                    type: 'base64',
+                                    title: 'DotaNT - Match '+ matchID
+                                },
+                                dataType: 'json',
+                                success: function(response) { 
+                                    if(response.success) { 
+                                        window.open(response.data.link);
+                                        $("#screenshotBtn").text('Make a screenshot');
+                                    }
+                                }
+                        });
+                        
+                        /* Save image locally.
                         canvas.toBlob(function(blob) {
                             saveAs(blob, "DotaNT - Match "+$("#MatchID").text()+".png"); 
                         });
+                        */
                     }
                 });
             $("#close_details_button").show();
