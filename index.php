@@ -916,15 +916,17 @@
         }
         
         function makeSnapshot(){
-            html2canvas($("#MatchDetails"), {
-                onrendered: function(canvas) {
-                    theCanvas = canvas;
+            $("#close_details_button").hide();
+                html2canvas($("#MatchDetails"), {
+                    onrendered: function(canvas) {
+                        theCanvas = canvas;
 
-                    canvas.toBlob(function(blob) {
-                        saveAs(blob, "DotaNT - Match "+$("#MatchID").text()+".png"); 
-                    });
-                }
-            });
+                        canvas.toBlob(function(blob) {
+                            saveAs(blob, "DotaNT - Match "+$("#MatchID").text()+".png"); 
+                        });
+                    }
+                });
+            $("#close_details_button").show();
         }
     </script>
 </html>
