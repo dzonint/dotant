@@ -937,8 +937,9 @@
                                 },
                                 dataType: 'json',
                                 success: function(response) { 
-                                    if(response.success) { 
+                                    if(response.success) {
                                         window.open(response.data.link);
+                                        alert('Screenshot has been uploaded at ' + response.data.link); // In case the pop-up gets blocked.
                                         $("#screenshotBtn").text('Make a screenshot');
                                     }
                                 }
