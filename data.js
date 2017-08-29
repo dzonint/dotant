@@ -2,7 +2,7 @@
 /* https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=<API_KEY> */
 
 // https://api.opendota.com/api/heroes
-
+// HERO START.    
 heroes = [  
    {  
       "id":1,
@@ -1583,9 +1583,10 @@ heroes = [
       "legs":2
    }
 ];
-    
-// https://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=<API_KEY>&language=en_us
+// HERO END. 
 
+// https://api.steampowered.com/IEconDOTA2_570/GetGameItems/v0001/?key=<API_KEY>&language=en_us
+// ITEM START.    
 items = {
 "result":{
     "items":[
@@ -3921,9 +3922,9 @@ items = {
             "localized_name":"River Vial: Blood"
             }
         ]
-    //,"status":200
     }
 };
+// ITEM END.  
 
 game_modes = [
             {  

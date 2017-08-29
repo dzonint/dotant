@@ -10,6 +10,8 @@
 <link rel="stylesheet" type="text/css" href="css/dota.css">
 <script src="script/jquery_3.2.1_min.js"></script>
 <script src="script/bootstrap_3.3.7_min.js"></script>
+<script src="script/FileSaver.js"></script>
+<script src="script/html2canvas.js"></script>        
 <!-- Add class "sortable" to tables you want to be sortable, add class "sorttable_nosort" to columns you don't want to be sortable. -->
 <script src="script/sorttable.js"></script>
 	</head>
@@ -169,7 +171,7 @@
         <!-- MATCH DETAILS TABLE -->
         <div id="popup_match_details" class="modal fade" role="dialog">
         <div id="MatchDetails" style="display: block;">
-<button type="button" class="close" data-dismiss="modal"><img id="close_details_button" src="http://cdn.dota2.com/apps/dota2/images/international2017/overview/close_details_button.png"></button>
+<button type="button" class="close" data-dismiss="modal"><img id="close_details_button" src="img/close_details_button.png"></button>
         <div id="MatchID" class="OptimizeTextRadiance"></div>
         <div id="MatchDuration" class="OptimizeTextRadiance"></div>
         <div id="MatchDate" class="OptimizeTextRadiance"></div>
@@ -310,7 +312,7 @@
                 <div class="DetailsTableCellXPMin" id="PlayerXPM9"></div>
             </div>
         </div>
-        <!-- <button type="button" onclick="makeSnapshot();" style="margin-top: 6cm;margin-left: 22cm; background-color: #337ab7"> Make a screenshot </button> -->
+         <button type="button" onclick="makeSnapshot();" style="margin-top: 5.5cm;margin-left: 25cm; background-color: #337ab7"> Make a screenshot </button> 
     </div>
 </div>
     
@@ -385,7 +387,7 @@
                         $.each(radID, function(k, hero_id){ 
                            $.each(heroes, function(l, heroes){
                              if(heroes.id == hero_id)
-                                 radiantTeam += '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
+                                 radiantTeam += '<img src="img/heroes/eg/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
                            });
                         }); 
                         
@@ -393,7 +395,7 @@
                         $.each(dirID, function(m, hero_id){
                            $.each(heroes, function(n, heroes){
                              if(heroes.id == hero_id)
-                                 direTeam += '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
+                                 direTeam += '<img src="img/heroes/eg/'+ heroes.name.substr(14) +'_eg.png" style="margin-right: 1px;">';
                            });
                         });
                         
@@ -488,7 +490,7 @@
                                         $("#Player"+i).html("Anonymous");
                                     
                                     $("#PlayerLevel"+i).html(player.level);
-                                    $("#PlayerHero"+i).html('<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + naziv +'_eg.png" style="margin-right: 3px;">' + heroes.localized_name);
+                                    $("#PlayerHero"+i).html('<img src="img/heroes/eg/' + naziv +'_eg.png" style="margin-right: 3px;">' + heroes.localized_name);
                                     $("#PlayerKDA"+i).html(player.kills + '/' + player.deaths + '/' + player.assists);
                                     $("#PlayerGold"+i).html(player.gold);
                                     $("#PlayerLastHits"+i).html(player.last_hits);
@@ -506,7 +508,7 @@
                                     else    
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerItems"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.localized_name+'">');
+                                    $("#PlayerItems"+i).append('<img src="img/items/lg/'+naziv+'_lg.png" title="'+items.localized_name+'">');
                                 }
                              
                                 // Backpack.
@@ -517,7 +519,7 @@
                                     else 
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerBackpack"+i).append('<img src="http://cdn.dota2.com/apps/dota2/images/items/'+naziv+'_lg.png" title="'+items.localized_name+'">');
+                                    $("#PlayerBackpack"+i).append('<img src="img/items/lg/'+naziv+'_lg.png" title="'+items.localized_name+'">');
                                 }
                             });    
                          
@@ -681,7 +683,7 @@
                                     // Finding appropriate hero image.
                                     $.each(heroes, function(numa, heroes){
                                         if(response[num].hero_id == heroes.id)
-                                            heroImage = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_eg.png" title="' + heroes.localized_name + '" style="margin-right: 3px;">';
+                                            heroImage = '<img src="img/heroes/eg/' + heroes.name.substr(14) + '_eg.png" title="' + heroes.localized_name + '" style="margin-right: 3px;">';
                                     });
                                     
                                     // Populating the hero fields.
@@ -698,7 +700,7 @@
                                     // Getting hero name and image. 
                                     $.each(heroes, function(numa, heroes){
                                         if(heroDetail.hero_id == heroes.id)
-                                            heroData = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) + '_sb.png" style="margin-right: 15px;">'+'<a href="#" onclick="getProfile(1,'+profile+','+heroes.id+')"><strong style="text-align:center">'+heroes.localized_name+'</strong></a></td>';
+                                            heroData = '<img src="img/heroes/sb/' + heroes.name.substr(14) + '_sb.png" style="margin-right: 15px;">'+'<a href="#" onclick="getProfile(1,'+profile+','+heroes.id+')"><strong style="text-align:center">'+heroes.localized_name+'</strong></a></td>';
                                     });
                                     
                                     var LastPlayedDate = new Date(heroDetail.last_played * 1000);
@@ -793,7 +795,7 @@
                                     // Finding out hero.
                                     $.each(heroes, function(n, heroes){
                                         if(match.hero_id == heroes.id)
-                                            hero = '<img src="http://cdn.dota2.com/apps/dota2/images/heroes/' + heroes.name.substr(14) +'_eg.png" style="margin-left: 20px;margin-right: 3px;">' + heroes.localized_name;
+                                            hero = '<img src="img/heroes/eg/' + heroes.name.substr(14) +'_eg.png" style="margin-left: 20px;margin-right: 3px;">' + heroes.localized_name;
                                     });
                                 
                                     // Finding out if player won. Dire slots have first bit set to 1, meaning their numeric value is above 128.
@@ -910,6 +912,18 @@
                          $(this).hide();		
                     }else {$(this).show();} 				
                 }); 										
+            });
+        }
+        
+        function makeSnapshot(){
+            html2canvas($("#MatchDetails"), {
+                onrendered: function(canvas) {
+                    theCanvas = canvas;
+
+                    canvas.toBlob(function(blob) {
+                        saveAs(blob, "DotaNT - Match "+$("#MatchID").text()+".png"); 
+                    });
+                }
             });
         }
     </script>
