@@ -5,7 +5,8 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="initial-scale=1.0">
         <meta name="author" content="TDD - dzonint@yahoo.com">
-
+        
+<link rel="icon" href="img/icon.png">
 <link rel="stylesheet" type="text/css" href="css/bootstrap_3.3.7_min.css">
 <link rel="stylesheet" type="text/css" href="css/dota.css">
 <script src="script/jquery_3.2.1_min.js"></script>
