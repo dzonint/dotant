@@ -1,337 +1,64 @@
-* {
-	font-family: 'Radiance';
-	line-height: normal;
+*{font-family:'Radiance';line-height:normal;}
+body{background-size:cover;background-attachment:fixed;background-repeat:no-repeat;font-weight:300;line-height:1.42em;color:#A7A1AE;}
+a, a:active, a:visited, a:focus{font-family:'Radiance';line-height:normal;color:#337ab7!important;text-decoration:none;}
+a:hover{color:#ffffff;text-decoration:none;-webkit-transition:color .15s ease-in-out;-moz-transition:color .15s ease-in-out;-o-transition:color .15s ease-in-out;transition:color .15s ease-in-out;}
+.container th h1{font-weight:bold;font-size:1em;text-align:left;color:#185875;}
+.container td{font-family:arial, helvetica, sans-serif;font-weight:normal;font-size:1em;-webkit-box-shadow:0 2px 2px -2px #0E1119;-moz-box-shadow:0 2px 2px -2px #0E1119;box-shadow:0 2px 2px -2px #0E1119;}
+.container table{text-align:left;overflow:hidden;width:80%;margin:0 auto;display:table;padding:0 0 8em 0;}
+.container td, .container th{padding-bottom:2%;padding-top:2%;padding-left:2%;font-weight:bolder;}
+.container tr:nth-child(odd){background-color:#f8f8f8;}
+.container tr:nth-child(even){background-color:#d1d1d1;}
+.container td:first-child{color:#626262;}
+.container tr:hover{background-color:#464A52;-webkit-box-shadow:0 6px 6px -6px #0E1119;-moz-box-shadow:0 6px 6px -6px #0E1119;box-shadow:0 6px 6px -6px #0E1119;}
+.container td:hover{background-color:#FFF842;color:#403E10;transition-delay:0s;transition-duration:0.4s;transition-property:all;transition-timing-function:line;}
+@media (max-width:800px){.container td:nth-child(4),
+.container th:nth-child(4){display:none;}
 }
-
-body {
-  background-size: cover; 
-  background-attachment: fixed; 
-  background-repeat: no-repeat;
-  font-weight: 300;
-  line-height: 1.42em;
-  color:#A7A1AE;
-}
-
-
-a, a:active, a:visited, a:focus {   
-    font-family: 'Radiance';
-	line-height: normal;
-	color:#337ab7!important;
-	text-decoration:none;
-}
-
-a:hover {
-	color:#ffffff;
-	text-decoration:none;
-	-webkit-transition: color .15s ease-in-out;
-	-moz-transition: color .15s ease-in-out;
-	-o-transition: color .15s ease-in-out;
-	transition: color .15s ease-in-out;
-}
-
-/* Table stuff */
-
-.container th h1 {
-	  font-weight: bold;
-	  font-size: 1em;
-  text-align: left;
-  color: #185875;
-}
-
-.container td {
-      font-family:arial, helvetica, sans-serif;
-	  font-weight: normal;
-	  font-size: 1em;
-  -webkit-box-shadow: 0 2px 2px -2px #0E1119;
-	   -moz-box-shadow: 0 2px 2px -2px #0E1119;
-	        box-shadow: 0 2px 2px -2px #0E1119;
-}
-
-.container table{
-	  text-align: left;
-	  overflow: hidden;
-	  width: 80%;
-	  margin: 0 auto;
-  display: table;
-  padding: 0 0 8em 0;
-}
-
-.container td, .container th {
-	  padding-bottom: 2%;
-	  padding-top: 2%;
-      padding-left:2%;
-      font-weight: bolder;
-}
-
-
-/* Background-color of the odd rows #323C50;*/
-.container tr:nth-child(odd) {
-	  background-color: #f8f8f8; 
-}
-
-/* Background-color of the even rows #2C3446;*/
-.container tr:nth-child(even) {
-	  background-color: #d1d1d1;
-}
-
-.container td:first-child { color: #626262; }
-
-.container tr:hover {
-   background-color: #464A52;
--webkit-box-shadow: 0 6px 6px -6px #0E1119;
-	   -moz-box-shadow: 0 6px 6px -6px #0E1119;
-	        box-shadow: 0 6px 6px -6px #0E1119;
-}
-
-.container td:hover {
-  background-color: #FFF842;
-  color: #403E10;
-  /*font-weight: bold;
-  
-  box-shadow: #7F7C21 -1px 1px, #7F7C21 -2px 2px, #7F7C21 -3px 3px, #7F7C21 -4px 4px, #7F7C21 -5px 5px, #7F7C21 -6px 6px;
-  transform: translate3d(6px, -6px, 0);*/
-  
-  transition-delay: 0s;
-	  transition-duration: 0.4s;
-	  transition-property: all;
-  transition-timing-function: line;
-}
-
-@media (max-width: 800px) {
-.container td:nth-child(4),
-.container th:nth-child(4) { display: none; }
-}
-
-/* End of table stuff */
-
-/* Match Details Stuff */
-
-#MatchDetails {
-    background: url('../img/endgame_backpack.png') no-repeat black;
-    width: 1081px;
-    height: 534px;
-    top: 50%;
-    left: 50%;
-    margin-top: -267px;
-    margin-left: -540px;
-    display: none;
-    position: fixed;
-    z-index: 9999;
-    color: #FFFFFF;
-}
-
-#MatchID {
-    position: absolute;
-    top: 60px;
-    left: 75px;
-}
-
-#MatchDuration {
-    position: absolute;
-    top: 60px;
-    left: 200px;
-}
-
-#MatchDate {
-    position: absolute;
-    top: 60px;
-    left: 847px;
-}
-
-#RadiantTeamName {
-    position: absolute;
-    top: 95px;
-    left: 75px;
-    color: #7aa73d;
-}
-
-#DireTeamName {
-    position: absolute;
-    top: 285px;
-    left: 75px;
-    color: #ca4633;
-}
-
-#WinnerTeamName {
-    position: absolute;
-    top: 50px;
-    left: 310px;
-    width: 450px;
-    text-align: center;
-    font-size: 20px;
-}
-
-#DetailsTable {
-    display: table;
-    top: 135px;
-    left: 80px;
-    width: 942px;
-    height: 140px;
-    position: relative;
-    font-size: 12px;
-}
-
-#DetailsTableBot {
-    margin-top: 53px;
-    display: table;
-    top: 135px;
-    left: 80px;
-    width: 942px;
-    height: 140px;
-    position: relative;
-    font-size: 12px;
-}
-
-.DetailsTableRow {
-    display: table-row;
-    vertical-align: middle;
-}
-
-.DetailsTableRow img {
-    margin-top: -1px;
-    vertical-align: middle;
-    height: 20px;
-}
-
-.DetailsTableCellPlayer {
-    display: table-cell;
-    width: 130px;
-}
-
-.DetailsTableCellLevel {
-    display: table-cell;
-    width: 25px;
-
-}
-
-.DetailsTableCellHero {
-    display: table-cell;
-    width: 155px;
-}
-
-.DetailsTableCellKDA {
-    display: table-cell;
-    width: 60px;
-    text-align: center;
-    padding-right: 10px;
-}
-
-.DetailsTableCellItems {
-    display: table-cell;
-    width: 190px;
-    padding-left: 10px;
-}
-
-.DetailsTableCellBackpack {
-    display: table-cell;
-    width: 95px;
-    margin-right: 10px;
-}
-
-.DetailsTableCellBackpack img{
-    height: 19px;
-}
-
-.DetailsTableCellGold {
-    display: table-cell;
-    width: 40px;
-}
-
-.DetailsTableCellLastHits {
-    display: table-cell;
-    width: 80px;
-}
-
-.DetailsTableCellDenies {
-    display: table-cell;
-    width: 45px;
-}
-
-.DetailsTableCellGoldMin {
-    display: table-cell;
-    width: 65px;
-}
-
-.DetailsTableCellXPMin {
-    display: table-cell;
-    width: 40px;
-}
-
-#close_details_button {
-    position: absolute;
-    top: 15px;
-    left: 1042px;
-}
-
-/* End of Match Details Stuff */
-
-/* Fonts */
-
-@font-face {
-    font-family: 'Radiance';
-    src: url('../fonts/radiance.eot');
-    src: url('../fonts/radiance.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/radiance.woff') format('woff'),
-    url('../fonts/radiance.ttf') format('truetype'),
-    url('../fonts/radiance.svg#ywftsvg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Radiance-Bold';
-    src: url('../fonts/radiance-bold.eot');
-    src: url('../fonts/radiance-bold.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/radiance-bold.woff') format('woff'),
-    url('../fonts/radiance-bold.ttf') format('truetype'),
-    url('../fonts/radiance-bold.svg#ywftsvg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Radiance-SemiBold';
-    src: url('../fonts/radiance-semibold.eot');
-    src: url('../fonts/radiance-semibold.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/radiance-semibold.woff') format('woff'),
-    url('../fonts/radiance-semibold.ttf') format('truetype'),
-    url('../fonts/radiance-semibold.svg#ywftsvg') format('svg');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'goudy_trajan_boldbold';
-    src: url('../fonts/goudytrajan-bold-pro-webfont.eot');
-    src: url('../fonts/goudytrajan-bold-pro-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/goudytrajan-bold-pro-webfont.woff') format('woff'),
-         url('../fonts/goudytrajan-bold-pro-webfont.ttf') format('truetype'),
-         url('../fonts/goudytrajan-bold-pro-webfont.svg#goudy_trajan_boldbold') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'goudy_trajan_mediummedium';
-    src: url('../fonts/goudytrajan-medium-pro-webfont.eot');
-    src: url('../fonts/goudytrajan-medium-pro-webfont.eot?#iefix') format('embedded-opentype'),
-         url('../fonts/goudytrajan-medium-pro-webfont.woff') format('woff'),
-         url('../fonts/goudytrajan-medium-pro-webfont.ttf') format('truetype'),
-         url('../fonts/goudytrajan-medium-pro-webfont.svg#goudy_trajan_mediummedium') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
-
-@font-face {
-    font-family: 'goudy_trajan_regularregular';
-    src: url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.eot');
-    src: url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.eot?#iefix') format('embedded-opentype'),
-         url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.woff') format('woff'),
-         url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.ttf') format('truetype'),
-         url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.svg#goudy_trajan_regularregular') format('svg');
-    font-weight: normal;
-    font-style: normal;
-
-}
+#MatchDetails{background:url('../img/endgame_backpack.png') no-repeat black;width:1081px;height:534px;top:50%;left:50%;margin-top:-267px;margin-left:-540px;display:none;position:fixed;z-index:9999;color:#FFFFFF;}
+#MatchID{position:absolute;top:60px;left:75px;}
+#MatchDuration{position:absolute;top:60px;left:200px;}
+#MatchDate{position:absolute;top:60px;left:847px;}
+#RadiantTeamName{position:absolute;top:95px;left:75px;color:#7aa73d;}
+#DireTeamName{position:absolute;top:285px;left:75px;color:#ca4633;}
+#WinnerTeamName{position:absolute;top:50px;left:310px;width:450px;text-align:center;font-size:20px;}
+#DetailsTable{display:table;top:135px;left:80px;width:942px;height:140px;position:relative;font-size:12px;}
+#DetailsTableBot{margin-top:53px;display:table;top:135px;left:80px;width:942px;height:140px;position:relative;font-size:12px;}
+.DetailsTableRow{display:table-row;vertical-align:middle;}
+.DetailsTableRow img{margin-top:-1px;vertical-align:middle;height:20px;}
+.DetailsTableCellPlayer{display:table-cell;width:130px;}
+.DetailsTableCellLevel{display:table-cell;width:25px;}
+.DetailsTableCellHero{display:table-cell;width:155px;}
+.DetailsTableCellKDA{display:table-cell;width:60px;text-align:center;padding-right:10px;}
+.DetailsTableCellItems{display:table-cell;width:190px;padding-left:10px;}
+.DetailsTableCellBackpack{display:table-cell;width:95px;margin-right:10px;}
+.DetailsTableCellBackpack img{height:19px;}
+.DetailsTableCellGold{display:table-cell;width:40px;}
+.DetailsTableCellLastHits{display:table-cell;width:80px;}
+.DetailsTableCellDenies{display:table-cell;width:45px;}
+.DetailsTableCellGoldMin{display:table-cell;width:65px;}
+.DetailsTableCellXPMin{display:table-cell;width:40px;}
+#close_details_button{position:absolute;top:15px;left:1042px;}
+@font-face{font-family:'Radiance';src:url('../fonts/radiance.eot');src:url('../fonts/radiance.eot?#iefix') format('embedded-opentype'),
+url('../fonts/radiance.woff') format('woff'),
+url('../fonts/radiance.ttf') format('truetype'),
+url('../fonts/radiance.svg#ywftsvg') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'Radiance-Bold';src:url('../fonts/radiance-bold.eot');src:url('../fonts/radiance-bold.eot?#iefix') format('embedded-opentype'),
+url('../fonts/radiance-bold.woff') format('woff'),
+url('../fonts/radiance-bold.ttf') format('truetype'),
+url('../fonts/radiance-bold.svg#ywftsvg') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'Radiance-SemiBold';src:url('../fonts/radiance-semibold.eot');src:url('../fonts/radiance-semibold.eot?#iefix') format('embedded-opentype'),
+url('../fonts/radiance-semibold.woff') format('woff'),
+url('../fonts/radiance-semibold.ttf') format('truetype'),
+url('../fonts/radiance-semibold.svg#ywftsvg') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'goudy_trajan_boldbold';src:url('../fonts/goudytrajan-bold-pro-webfont.eot');src:url('../fonts/goudytrajan-bold-pro-webfont.eot?#iefix') format('embedded-opentype'),
+url('../fonts/goudytrajan-bold-pro-webfont.woff') format('woff'),
+url('../fonts/goudytrajan-bold-pro-webfont.ttf') format('truetype'),
+url('../fonts/goudytrajan-bold-pro-webfont.svg#goudy_trajan_boldbold') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'goudy_trajan_mediummedium';src:url('../fonts/goudytrajan-medium-pro-webfont.eot');src:url('../fonts/goudytrajan-medium-pro-webfont.eot?#iefix') format('embedded-opentype'),
+url('../fonts/goudytrajan-medium-pro-webfont.woff') format('woff'),
+url('../fonts/goudytrajan-medium-pro-webfont.ttf') format('truetype'),
+url('../fonts/goudytrajan-medium-pro-webfont.svg#goudy_trajan_mediummedium') format('svg');font-weight:normal;font-style:normal;}
+@font-face{font-family:'goudy_trajan_regularregular';src:url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.eot');src:url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.eot?#iefix') format('embedded-opentype'),
+url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.woff') format('woff'),
+url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.ttf') format('truetype'),
+url('http://cdn.dota2.com/apps/dota2/fonts/goudytrajan-regular-pro-webfont.svg#goudy_trajan_regularregular') format('svg');font-weight:normal;font-style:normal;}

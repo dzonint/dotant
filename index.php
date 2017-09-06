@@ -17,7 +17,7 @@
 <script src="script/sorttable.js"></script>
 	</head>
 
-<body background="img/Background.png"> 
+<body background="img/Background.jpg"> 
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container">
