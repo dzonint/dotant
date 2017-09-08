@@ -509,7 +509,7 @@
                                     else    
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerItems"+i).append('<img src="img/items/lg/'+naziv+'_eg.png" title="'+items.localized_name+'">');
+                                    $("#PlayerItems"+i).append('<img src="img/items/eg/'+naziv+'_eg.png" title="'+items.localized_name+'">');
                                 }
                              
                                 // Backpack.
@@ -520,7 +520,7 @@
                                     else 
                                         // Cutting out item_ part of the string.
                                         var naziv = items.name.substring(5);
-                                    $("#PlayerBackpack"+i).append('<img src="img/items/lg/'+naziv+'_eg.png" title="'+items.localized_name+'">');
+                                    $("#PlayerBackpack"+i).append('<img src="img/items/eg/'+naziv+'_eg.png" title="'+items.localized_name+'">');
                                 }
                             });    
                          
