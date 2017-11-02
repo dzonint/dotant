@@ -458,7 +458,7 @@
             $.ajax({ // AJAX for match data. 
                 url: 'https://api.opendota.com/api/matches/'+match,
                 success: function(response){
-                    var legitGameModes = [1,2,3,4,5,8,12,13,14,16,17,18,22];
+                    var legitGameModes = [1,2,3,4,5,8,12,13,14,16,17,18,22,23];
                     if(legitGameModes.indexOf(response.game_mode) == -1){
                         alert('This match is some event game mode or non 5 v 5 gamemode, thus it won\'t look good in table.');
                     }

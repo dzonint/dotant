@@ -1581,7 +1581,37 @@ heroes = [
          "Initiator"
       ],
       "legs":2
-   }
+   },
+   {
+    "id": 119,
+    "name": "npc_dota_hero_dark_willow",
+    "localized_name": "Dark Willow",
+    "primary_attr": "int",
+    "attack_type": "Ranged",
+    "roles": [
+        "Support", 
+        "Nuker", 
+        "Disabler", 
+        "Escape"
+    ],
+    "legs": 2
+    }, 
+    {
+    "id": 120,
+    "name": "npc_dota_hero_pangolier",
+    "localized_name": "Pangolier",
+    "primary_attr": "agi",
+    "attack_type": "Melee",
+    "roles": [
+        "Carry", 
+        "Nuker", 
+        "Disabler", 
+        "Durable", 
+        "Escape", 
+        "Initiator"
+    ],
+    "legs": 2
+    }
 ];
 // HERO END. 
 
