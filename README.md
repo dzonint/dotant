@@ -32,3 +32,6 @@ Clicking on any of the match ids will generate a match details table. I expanded
 Users can click on the button next to their name to show their full match history, which is a different call from recent matches and might take significantly longer (which is why I kept the two separated). The hero table is sortable (click on the headers with a lighter shade), and so are the match tables but they are bugged due to pagination (meaning it will only sort the current results it sees, and not the whole table). They can also click on the hero's name on hero table and the table with all the matches they played with that hero will be displayed.
 
 There's a search bar in top right corner of navbar, where users can either search for a match based on match id (which will make match details table appear if the match is found), or they can search for profiles (searches based on id are instant and will show the user's profile, while searches based on profile name will generate a table with all profiles who have at least 70% similarity with the search term). There's also the recent matches button which will just generate a table with data from random 100 matches AJAX call returned.
+
+## Images
+<img src="https://dzonint.github.io/img/portfolio/dotant.png" width="300"></img>
